@@ -1,63 +1,44 @@
 $(function() {
   $('#button').on('click', function() {
-    const fields = [
-      'lb1', 'lb1-2', 'lb1-3',
-      'lb2', 'lb2-2', 'lb2-3',
-      'lb3',
-      'lb4', 'lb4-2',
-      'lb5', 'lb5-2',
-      'lb6', 'lb6-2',
-      'lb7', 'lb7-2'
-    ];
+    // 前回の結果をクリア
+    $('.result, .individual').empty();
 
-    let values = {};
+    // 数値取得とチェックを一度に行う関数
+    const getValue = (selector, replace = false) => {
+      let val = $(selector).val();
+      if (replace) val = val.replace(/,/g, ""); // カンマを除去
+      val = parseInt(val);
+      if (isNaN(val)) alert('客数が空白もしくは数値以外です');
+      return val || 0; // NaNの場合は0を返す
+    };
 
-    fields.forEach(field => {
-      let value = $('#' + field).val();
-      value = field.endsWith('-2') ? parseInt(value) : parseInt(numberReplace(value));
-      numberAlert(value);
-      values[field] = value;
-    });
+    // 各入力値の取得
+    const num = {
+      A1: getValue('#lb1', true), B1: getValue('#lb1-2'), C1: getValue('#lb1-3'),
+      A2: getValue('#lb2', true), B2: getValue('#lb2-2'), C2: getValue('#lb2-3'),
+      C: getValue('#lb3'), D1: getValue('#lb4', true), D2: getValue('#lb4-2'),
+      E1: getValue('#lb5', true), E2: getValue('#lb5-2'), F1: getValue('#lb6', true),
+      F2: getValue('#lb6-2'), G1: getValue('#lb7', true), G2: getValue('#lb7-2')
+    };
 
-    function numberAlert(number) {
-      if (isNaN(number)) {
-        alert('客数が空白もしくは数値以外です');
-        throw new Error('Invalid number');
-      }
-    }
+    // 各合計の計算
+    const totalSell = num.A1 + num.A2;
+    const totalItem = num.B1 + num.B2;
+    const guestNumber = num.C1 + num.C2;
+    const achievementRate = Math.round(totalSell / num.C);
+    const averageSpend = Math.round(totalSell / guestNumber);
 
-    function numberReplace(number) {
-      return number.replace(/,/g, "");
-    }
+    // 結果の出力
+    $('.result').append(`
+      <li><p>実績</p><p>¥${totalSell.toLocaleString()} (${totalItem}点) ${achievementRate}%</p></li>
+      <li class="unit-price"><p>客単価</p><p>¥${averageSpend.toLocaleString()} (${guestNumber}客)</p></li>
+    `);
 
-    const totalSell = values['lb1'] + values['lb2'];
-    const totallitem = values['lb1-2'] + values['lb2-2'];
-    const guestNumber = values['lb1-3'] + values['lb2-3'];
-    const achievementRate = Math.round(totalSell / values['lb3']);
-    const averageCustomerSpend = Math.round(totalSell / guestNumber);
-
-    $('.result').append(
-      '<li>',
-      '<p>実績</p><p>¥' + totalSell.toLocaleString() + '(' + totallitem + '点) ' + achievementRate + ' %</p>',
-      '</li>',
-      '<li class="unit-price">',
-      '<p>客単価</p><p>¥' + averageCustomerSpend.toLocaleString() + ' (' + guestNumber + '客) </p>',
-      '</li>'
-    );
-
-    const individualItems = [
-      { label: '洋', sell: 'lb4', total: 'lb4-2' },
-      { label: '和', sell: 'lb5', total: 'lb5-2' },
-      { label: '砥石', sell: 'lb6', total: 'lb6-2' },
-      { label: '鞘', sell: 'lb7', total: 'lb7-2' }
-    ];
-
-    individualItems.forEach(item => {
-      $('.individual').append(
-        '<li>',
-        '<p>' + item.label + '</p><p>¥' + values[item.sell].toLocaleString() + ' (' + values[item.total] + ')</p>',
-        '</li>'
-      );
+    // 各カテゴリの販売額表示
+    [['洋', '#lb4', '#lb4-2'], ['和', '#lb5', '#lb5-2'], ['砥石', '#lb6', '#lb6-2'], ['鞘', '#lb7', '#lb7-2']].forEach(item => {
+      $('.individual').append(`
+        <li><p>${item[0]}</p><p>¥${$(item[1]).val().toLocaleString()} (${ $(item[2]).val() })</p></li>
+      `);
     });
   });
 });
