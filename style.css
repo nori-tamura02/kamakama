@@ -88,9 +88,8 @@ ul li {
   .result li, .individual li {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .result p, .individual p {
-    margin: 5px 0;
+    margin-bottom: 0px;
+    padding-top: 0px;
   }
 }
 
@@ -107,8 +106,5 @@ ul li {
   .result li, .individual li {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .result p, .individual p {
-    margin: 5px 0;
   }
 }
