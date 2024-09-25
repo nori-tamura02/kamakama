@@ -1,0 +1,114 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  vertical-align: bottom;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  color: #333;
+  font-family: "Hiragino Kaku Gothic Pro", sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+img {
+  border: 0;
+  max-width: 100%;
+  vertical-align: bottom;
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+}
+
+ul li {
+  list-style: none;
+}
+
+.main {
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "Meiryo", "MS PGothic", Dotum, sans-serif;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result {
+  margin-top: 20px;
+}
+
+.result p {
+  display: inline-block;
+  margin: 0 8px;
+}
+
+.calculator {
+  padding: 20px;
+}
+
+.calculator li {
+  padding-top: 8px;
+}
+
+.individual {
+  margin-top: 30px;
+}
+
+.individual p {
+  display: inline-block;
+  margin: 0 8px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  label, input {
+    display: block;
+  }
+  .calculator {
+    padding: 15px;
+  }
+  .calculator li {
+    margin-bottom: 20px;
+  }
+  .result li, .individual li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .result p, .individual p {
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  .calculator {
+    padding: 10px;
+  }
+  .main {
+    font-size: 12px;
+  }
+  .result li, .individual li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .result p, .individual p {
+    margin: 5px 0;
+  }
+}
